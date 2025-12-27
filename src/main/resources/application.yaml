@@ -1,3 +1,10 @@
 spring:
   application:
     name: localizacao
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show_sql: true
+    properties:
+      hibernate:
+        format_sql: true

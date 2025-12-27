@@ -1,12 +1,16 @@
 package com.mjdsilva.localizacao.domain.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "tb_cidade")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Cidade {
 
     @Id
