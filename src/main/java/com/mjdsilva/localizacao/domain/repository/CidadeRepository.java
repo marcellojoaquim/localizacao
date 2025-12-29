@@ -14,7 +14,18 @@ public interface CidadeRepository extends JpaRepository<Cidade, Long> {
     List<Cidade> findByNomeStartingWith(String nome);
     List<Cidade> findByNomeEndingWith(String nome);
     List<Cidade> findByNomeContaining(String nome);
+    List<Cidade> findByNomeLike(String nome);
+    List<Cidade> findByNomeLikeIgnoreCase(String nome);
+
+    @Query("SELECT c FROM Cidade c WHERE UPPER(c.nome) LIKE UPPER(?1)")
+    List<Cidade> findByNomeLikeIgnoreCaseJPQL(String nome);
 
     @Query("SELECT c FROM Cidade c WHERE c.habitantes BETWEEN :minValue AND :maxValue")
     List<Cidade> findCidadesInHabitantesRange(@Param("minValue") Long minValue, @Param("maxValue") Long maxValue);
+
+    List<Cidade> findByHabitantesLessThan(Long habitantes);
+    List<Cidade> findByHabitantesGreaterThan(Long habitantes);
+
+    List<Cidade> findByHabitantesGreaterThanEqualAndNomeLikeIgnoreCase(Long habitantes, String nome);
+    List<Cidade> findByHabitantesGreaterThanEqualOrNomeLikeIgnoreCase(Long habitantes, String nome);
 }
