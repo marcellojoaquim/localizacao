@@ -2,9 +2,11 @@ package com.mjdsilva.localizacao.service;
 
 import com.mjdsilva.localizacao.domain.entity.Cidade;
 import com.mjdsilva.localizacao.domain.repository.CidadeRepository;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class CidadeService {
@@ -43,7 +45,7 @@ public class CidadeService {
         cidadeRepository.findByNomeContaining("ao").forEach(System.out::println);
     }
 
-    public void listarCidadesLike() { cidadeRepository.findByNomeLike("%a").forEach(System.out::println); }
+    public void listarCidadesLike() { cidadeRepository.findByNomeLike("%a", Sort.by("habitantes")).forEach(System.out::println); }
 
     public void listarCidadesLikeIgnoreCaseJPQL() { cidadeRepository.findByNomeLikeIgnoreCaseJPQL("For%").forEach(System.out::println); }
 
@@ -68,7 +70,17 @@ public class CidadeService {
     }
 
     public void listarCidadesComMaisDeOuNomeIgualA(){
-        cidadeRepository.findByHabitantesGreaterThanEqualOrNomeLikeIgnoreCase(1000000L, "%a%").forEach(System.out::println);
+        cidadeRepository.findByHabitantesGreaterThanEqualOrNomeLikeIgnoreCase(1000000L, "%a").forEach(System.out::println);
     }
 
+    public void listaPaginada() {
+        Pageable pageable = PageRequest.of(1, 4);
+        cidadeRepository.findByNomeLikeIgnoreCaseJPQLPaginado("%a", pageable).forEach(System.out::println);
+    }
+
+    public List<Cidade> filtroDinamico(Cidade cidade) {
+        ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreCase();
+        Example<Cidade> example = Example.of(cidade, matcher);
+        return cidadeRepository.findAll(example);
+    }
 }

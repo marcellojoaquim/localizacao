@@ -1,14 +1,12 @@
 package com.mjdsilva.localizacao;
 
 import com.mjdsilva.localizacao.domain.entity.Cidade;
-import com.mjdsilva.localizacao.domain.repository.CidadeRepository;
 import com.mjdsilva.localizacao.service.CidadeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import javax.transaction.Transactional;
 
 
 @SpringBootApplication
@@ -19,20 +17,23 @@ public class LocalizacaoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		var cidade = new Cidade(null, "fortaleza", null);
 		//cidadeService.salvarCidade();
-		cidadeService.listarCidades();
+		//cidadeService.listarCidades();
 		//listarCidadesPorNome();
 		//listarCidadesPorHabitantes();
 		//listarCidadeEntreValoresHabitantes();
 		//listarCidadesComecadasPor();
 		//listarCidadesTerminadasPor();
 		//listarCidadesQueContem();
-		//listarCidadesLike();
+		//cidadeService.listarCidadesLike();
 		//listarCidadesLikeIgnoreCase();
 		//listarCidadesComMenosDe();
 		//listarCidadesComMaisDe();
 		//listarCidadesComMaisDeENomeIgualA();
-		//listarCidadesComMaisDeOuNomeIgualA();
+		//cidadeService.listarCidadesComMaisDeOuNomeIgualA();
+		//cidadeService.listaPaginada();
+		cidadeService.filtroDinamico(cidade).forEach(System.out::println);
 	}
 
 	public static void main(String[] args) {
