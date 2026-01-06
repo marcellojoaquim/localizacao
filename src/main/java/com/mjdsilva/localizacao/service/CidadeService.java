@@ -2,7 +2,9 @@ package com.mjdsilva.localizacao.service;
 
 import com.mjdsilva.localizacao.domain.entity.Cidade;
 import com.mjdsilva.localizacao.domain.repository.CidadeRepository;
+import com.mjdsilva.localizacao.domain.repository.specs.CidadeSpecs;
 import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -82,5 +84,27 @@ public class CidadeService {
         ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreCase();
         Example<Cidade> example = Example.of(cidade, matcher);
         return cidadeRepository.findAll(example);
+    }
+
+    //Specifications
+
+    public void listarCidadesBySpecs() {
+        Specification<Cidade> spec = CidadeSpecs.nomeEqual("Fortaleza");
+        cidadeRepository.findAll(spec).forEach(System.out::println);
+    }
+
+    public void listarCidadesBySpecsOuHabitantes() {
+        Specification<Cidade> spec = CidadeSpecs.nomeEqual("Sao Paulo").or(CidadeSpecs.habitantesMaiorOuIgual(10000L));
+        cidadeRepository.findAll(spec).forEach(System.out::println);
+    }
+
+    public void listarCidadesBySpecsAndHabitantes() {
+        Specification<Cidade> spec = CidadeSpecs.nomeEqual("Sao Paulo").and(CidadeSpecs.habitantesMaiorOuIgual(10000L));
+        cidadeRepository.findAll(spec).forEach(System.out::println);
+    }
+
+    public void habitantesBetweem() {
+        Specification<Cidade> spec = CidadeSpecs.nomeEqual("Sao Paulo").and(CidadeSpecs.habitantesMaiorOuIgual(10000L));
+        cidadeRepository.findAll(spec).forEach(System.out::println);
     }
 }

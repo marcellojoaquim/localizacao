@@ -33,7 +33,10 @@ public class LocalizacaoApplication implements CommandLineRunner {
 		//listarCidadesComMaisDeENomeIgualA();
 		//cidadeService.listarCidadesComMaisDeOuNomeIgualA();
 		//cidadeService.listaPaginada();
-		cidadeService.filtroDinamico(cidade).forEach(System.out::println);
+		//cidadeService.filtroDinamico(cidade).forEach(System.out::println);
+		//cidadeService.listarCidadesBySpecs();
+		//cidadeService.listarCidadesBySpecsOuHabitantes();
+		cidadeService.listarCidadesBySpecsAndHabitantes();
 	}
 
 	public static void main(String[] args) {
