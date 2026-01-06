@@ -1,6 +1,7 @@
 package com.mjdsilva.localizacao.domain.repository;
 
 import com.mjdsilva.localizacao.domain.entity.Cidade;
+import com.mjdsilva.localizacao.domain.repository.projections.CidadeProjections;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -36,7 +37,9 @@ public interface CidadeRepository extends JpaRepository<Cidade, Long>, JpaSpecif
     List<Cidade> findByHabitantesGreaterThanEqualAndNomeLikeIgnoreCase(Long habitantes, String nome);
     List<Cidade> findByHabitantesGreaterThanEqualOrNomeLikeIgnoreCase(Long habitantes, String nome);
 
-    //Especifications
+    //SQL nativo
+    @Query(nativeQuery = true, value = "SELECT id_cidade as id, nome, qtd_habitantes FROM tb_cidade as c WHERE c.nome =:nome")
+    List<CidadeProjections> findByNomeSQLNativo(@Param("nome") String nome);
 
 
 }

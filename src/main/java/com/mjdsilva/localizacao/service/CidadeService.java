@@ -137,4 +137,12 @@ public class CidadeService {
 
         cidadeRepository.findAll(specs).forEach(System.out::println);
     }
+
+    //query nativa
+
+    public void listarCidadesPorNomeSQL() {
+        cidadeRepository.findByNomeSQLNativo("Recife")
+                .stream().map(cidadeProjections -> new Cidade(cidadeProjections.getId(), cidadeProjections.getNome(), null))
+                .forEach(System.out::println);
+    }
 }

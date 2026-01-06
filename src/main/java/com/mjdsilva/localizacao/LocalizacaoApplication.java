@@ -37,7 +37,8 @@ public class LocalizacaoApplication implements CommandLineRunner {
 		//cidadeService.listarCidadesBySpecs();
 		//cidadeService.listarCidadesBySpecsOuHabitantes();
 		//cidadeService.listarCidadesBySpecsAndHabitantes();
-		cidadeService.filtroDinamicoSpec(cidade);
+		//cidadeService.filtroDinamicoSpec(cidade);
+		cidadeService.listarCidadesPorNomeSQL();
 	}
 
 	public static void main(String[] args) {
