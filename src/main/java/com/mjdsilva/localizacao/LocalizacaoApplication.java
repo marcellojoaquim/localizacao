@@ -17,7 +17,7 @@ public class LocalizacaoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		var cidade = new Cidade(null, "fortaleza", null);
+		var cidade = new Cidade(1L, "Fortaleza", 1000L);
 		//cidadeService.salvarCidade();
 		//cidadeService.listarCidades();
 		//listarCidadesPorNome();
@@ -36,7 +36,8 @@ public class LocalizacaoApplication implements CommandLineRunner {
 		//cidadeService.filtroDinamico(cidade).forEach(System.out::println);
 		//cidadeService.listarCidadesBySpecs();
 		//cidadeService.listarCidadesBySpecsOuHabitantes();
-		cidadeService.listarCidadesBySpecsAndHabitantes();
+		//cidadeService.listarCidadesBySpecsAndHabitantes();
+		cidadeService.filtroDinamicoSpec(cidade);
 	}
 
 	public static void main(String[] args) {

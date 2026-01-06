@@ -6,6 +6,7 @@ import com.mjdsilva.localizacao.domain.repository.specs.CidadeSpecs;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -88,6 +89,11 @@ public class CidadeService {
 
     //Specifications
 
+    public Specification<Cidade> buscarPorId(Long id) {
+        Specification<Cidade> spec = CidadeSpecs.idEqual(id);
+        return spec;
+    }
+
     public void listarCidadesBySpecs() {
         Specification<Cidade> spec = CidadeSpecs.nomeEqual("Fortaleza");
         cidadeRepository.findAll(spec).forEach(System.out::println);
@@ -103,8 +109,32 @@ public class CidadeService {
         cidadeRepository.findAll(spec).forEach(System.out::println);
     }
 
-    public void habitantesBetweem() {
-        Specification<Cidade> spec = CidadeSpecs.nomeEqual("Sao Paulo").and(CidadeSpecs.habitantesMaiorOuIgual(10000L));
+    public void habitantesBetween() {
+        Specification<Cidade> spec = CidadeSpecs.habitantesBetween(10000L, 700000L);
         cidadeRepository.findAll(spec).forEach(System.out::println);
+    }
+
+    public void buscarPorNomeSpec() {
+        Specification<Cidade> spec = CidadeSpecs.nomeLike("Sao Paulo");
+        cidadeRepository.findAll(spec).forEach(System.out::println);
+    }
+
+    public void filtroDinamicoSpec( Cidade filtro) {
+        Specification<Cidade> specs = Specification.where(
+                (root, query, criteriaBuilder) -> criteriaBuilder.conjunction());
+
+        if(filtro.getId() != null) {
+            specs = specs.and(CidadeSpecs.idEqual(filtro.getId()));
+        }
+
+        if(StringUtils.hasText(filtro.getNome())) {
+            specs = specs.and(CidadeSpecs.nomeLike(filtro.getNome()));
+        }
+
+        if(filtro.getHabitantes() != null){
+            specs = specs.and(CidadeSpecs.habitantesMaiorOuIgual(filtro.getHabitantes()));
+        }
+
+        cidadeRepository.findAll(specs).forEach(System.out::println);
     }
 }
