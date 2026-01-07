@@ -41,5 +41,4 @@ public interface CidadeRepository extends JpaRepository<Cidade, Long>, JpaSpecif
     @Query(nativeQuery = true, value = "SELECT id_cidade as id, nome, qtd_habitantes FROM tb_cidade as c WHERE c.nome =:nome")
     List<CidadeProjections> findByNomeSQLNativo(@Param("nome") String nome);
 
-
 }
